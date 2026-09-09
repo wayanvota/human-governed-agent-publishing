@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Skeptic model output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision", "blocking_issues", "required_roles", "reason", "release_eligible"],
+  "properties": {
+    "decision": {"enum": ["APPROVE", "REVISE", "REJECT"]},
+    "blocking_issues": {"type": "array", "items": {"type": "string"}},
+    "required_roles": {
+      "type": "array",
+      "items": {"enum": ["monitor", "facilitator", "evidence-analyst", "entity-resolver", "claim-checker", "digest-editor"]}
+    },
+    "reason": {"type": "string", "minLength": 1},
+    "release_eligible": {"type": "boolean"}
+  }
+}
+

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "human-governed-agent-publishing"
+version = "0.1.0"
+description = "Deterministic release gates for human-governed multi-agent publishing"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Wayan Vota" }]
+keywords = ["agents", "publishing", "editorial", "verification", "human-in-the-loop"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+]
+
+[project.scripts]
+agent-publish = "human_agent_publishing.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

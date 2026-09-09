@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Claim Checker model output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision", "sources_verified", "entities_reconciled", "findings", "issues"],
+  "properties": {
+    "decision": {"enum": ["PASS", "REVISE"]},
+    "sources_verified": {"type": "boolean"},
+    "entities_reconciled": {"type": "boolean"},
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim", "status", "evidence", "notes"],
+        "properties": {
+          "claim": {"type": "string", "minLength": 1},
+          "status": {"enum": ["SUPPORTED", "QUALIFY", "UNSUPPORTED", "CONFLICT", "BROKEN_LINK"]},
+          "evidence": {"type": "string"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "issues": {"type": "array", "items": {"type": "string"}}
+  }
+}
+

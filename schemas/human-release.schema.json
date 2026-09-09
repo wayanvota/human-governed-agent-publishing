@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Human release record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source", "decision", "response", "recorded_at", "user_message_sha256", "facilitator_review_sha256", "artifact_sha256", "metadata_sha256"],
+  "properties": {
+    "source": {"const": "direct_user_message"},
+    "decision": {"const": "PUBLISH"},
+    "response": {"type": "string", "minLength": 1},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "user_message_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "facilitator_review_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "metadata_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
+

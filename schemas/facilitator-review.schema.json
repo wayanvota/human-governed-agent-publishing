@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Facilitator model output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["stage", "decision", "triggers", "human_review_required", "reason"],
+  "properties": {
+    "stage": {"enum": ["DISCOVERY", "FINAL"]},
+    "decision": {"enum": ["AUTONOMOUS", "HUMAN_HOLD"]},
+    "triggers": {
+      "type": "array",
+      "items": {"enum": ["APPROVAL", "EXPERTISE", "VARIANCE", "INTEREST"]},
+      "uniqueItems": true
+    },
+    "human_review_required": {"type": "boolean"},
+    "reason": {"type": "string", "minLength": 1}
+  }
+}
+

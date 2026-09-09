@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "eligible_content": [
+    "reported_article",
+    "weekly_digest"
+  ],
+  "excluded_actions": [
+    "contact_sources",
+    "send_email",
+    "correct_published_work",
+    "change_accounts",
+    "make_purchases"
+  ],
+  "attention_triggers": [
+    "APPROVAL",
+    "EXPERTISE",
+    "VARIANCE",
+    "INTEREST"
+  ],
+  "required_claim_decision": "PASS",
+  "required_skeptic_decision": "APPROVE",
+  "final_decisions": [
+    "AUTONOMOUS",
+    "HUMAN_HOLD"
+  ],
+  "held_release_decision": "PUBLISH",
+  "human_decision_source": "direct_user_message",
+  "require_sources_verified": true,
+  "require_entities_reconciled": true,
+  "require_prompt_manifest": true,
+  "require_runtime_manifest": true,
+  "demo_release_forbidden": true
+}
+
