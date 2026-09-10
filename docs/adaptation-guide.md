@@ -28,6 +28,12 @@ The prompts can run through an API, agent framework, local model runner, or manu
 
 Require structured output for Claim Checker, Skeptic, and Facilitator records. Validate the response outside the model. Record actual tool use from the provider trace rather than asking the model whether it searched.
 
+Use [`config/model-routing.openai.example.json`](../config/model-routing.openai.example.json) as an optional cost-control example. It routes by editorial consequence, not prestige or prompt length. Replace its models and dated prices with choices validated against your own packets.
+
+Load shared and role-specific instructions from [`prompts/context/`](../prompts/context/) instead of sending the entire workflow to every agent. Run `preflight_agent_call()` immediately before Claim Checker, Skeptic, and final Facilitator calls. Append actual provider usage to a private operational ledger.
+
+The implementation details and evaluation requirements are in [`cost-controls.md`](cost-controls.md).
+
 ## 5. Protect the human decision channel
 
 Store human decision records where the unattended process cannot write them. Capture the direct message or approval event, its timestamp, actor identity, and the exact hashes released.
@@ -67,4 +73,3 @@ At minimum, test that release stops when:
 Run the system in observation mode. Compare its packets with human decisions and edits. Then allow draft creation. Consider automatic release only after repeated evidence that the gates fail closed and the public read-back works.
 
 Cadence is never a reason to lower the evidence threshold.
-

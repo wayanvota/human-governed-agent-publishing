@@ -9,6 +9,10 @@ This repository shows a safer division of labor.
 ## What this gives you
 
 - Seven reusable agent prompts with distinct editorial jobs
+- Risk-based model routes that reserve stronger models for consequential review
+- Compact, role-specific context instead of one swollen prompt for every agent
+- Deterministic preflight checks that stop doomed review calls before they incur API cost
+- An append-only usage ledger with per-role cost estimates
 - A two-stage gate that decides when a human must intervene
 - Claim-check and adversarial-review records bound to exact file hashes
 - A release verifier that fails closed when evidence, copy, policy, or approval changes
@@ -59,6 +63,27 @@ The agents do the interpretive work. The verifier checks file hashes, review ord
 
 The prompt files live in [`prompts/`](prompts/). Treat them as starting points. A useful adaptation replaces their generic scope with your editorial brief, evidence rules, source hierarchy, and named human authority.
 
+## Cost controls without weaker gates
+
+The sample routing policy spends less on repetitive discovery and entity cleanup, then reserves stronger reasoning for claim checking, adversarial review, and final human-attention decisions.
+
+That hierarchy is deliberate. A cheap monitoring miss is recoverable. A cheap model waving through a weak allegation is rather more memorable.
+
+The package also includes:
+
+- shared context plus one small context file per role;
+- a preflight command that verifies files and prerequisite reviews before an expensive agent runs;
+- usage records that separate uncached input, cached input, cache writes, output, reasoning, and paid tool calls;
+- a monthly cost report grouped by role.
+
+```bash
+agent-publish route monitor
+agent-publish preflight /path/to/packet --stage skeptic
+agent-publish cost-report usage/openai.jsonl --month 2026-09
+```
+
+The included routing configuration is an OpenAI example, not a provider requirement. Prices change. Update them from the linked provider source before treating estimates as current. See [`docs/cost-controls.md`](docs/cost-controls.md) for adapter examples and quality guardrails.
+
 ## Why two human-attention checks?
 
 The first check happens after evidence triage. It prevents an autonomous system from running far with a sensitive, ambiguous, or unusually consequential topic.
@@ -84,6 +109,7 @@ source .venv/bin/activate
 python -m pip install -e .
 python -m unittest discover -s tests -v
 agent-publish demo /tmp/agent-publishing-demo
+agent-publish preflight /tmp/agent-publishing-demo --stage skeptic --allow-demo
 agent-publish verify /tmp/agent-publishing-demo --allow-demo
 ```
 
@@ -106,7 +132,7 @@ Any changed byte breaks the corresponding approval. Fix the package, then review
 
 ## What this repository deliberately does not do
 
-- Choose a model provider
+- Call a model provider
 - Scrape private sources
 - Store API keys
 - Contact sources
@@ -124,14 +150,14 @@ Start with [`docs/adaptation-guide.md`](docs/adaptation-guide.md). The short ver
 1. Write a concrete editorial brief.
 2. Define approved sources and evidence labels.
 3. Edit the seven prompts.
-4. Replace the example policy with your actual authority limits.
-5. Store human decisions in a location the scheduled workflow cannot write.
-6. Add a CMS adapter that calls `verify_packet()` immediately before release.
-7. Read the published result back from a public endpoint.
+4. Tune model routes against your own quality tests and current provider prices.
+5. Replace the example policy with your actual authority limits.
+6. Store human decisions in a location the scheduled workflow cannot write.
+7. Add a CMS adapter that calls `verify_packet()` immediately before release.
+8. Read the published result back from a public endpoint.
 
 The architecture review in [`docs/design-review.md`](docs/design-review.md) explains which safeguards carry the most weight and where this pattern still depends on human and operational controls.
 
 ## License
 
 [MIT](LICENSE)
-

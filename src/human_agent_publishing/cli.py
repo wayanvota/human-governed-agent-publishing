@@ -9,6 +9,15 @@ from pathlib import Path
 import shutil
 import sys
 
+from .efficiency import (
+    PREFLIGHT_STAGES,
+    ROLES,
+    load_routing_config,
+    preflight_agent_call,
+    resolve_route,
+    route_as_dict,
+    summarize_usage,
+)
 from .gate import GateError, PRIMARY_FILES, sha256_file, verify_packet
 
 
@@ -188,6 +197,25 @@ def build_parser() -> argparse.ArgumentParser:
 
     digest = commands.add_parser("hash", help="Print a file's SHA-256 digest")
     digest.add_argument("file", type=Path)
+
+    preflight = commands.add_parser(
+        "preflight", help="Check deterministic prerequisites before a review call"
+    )
+    preflight.add_argument("directory", type=Path)
+    preflight.add_argument("--stage", required=True, choices=sorted(PREFLIGHT_STAGES))
+    preflight.add_argument("--allow-demo", action="store_true")
+
+    route = commands.add_parser("route", help="Show the configured route for one role")
+    route.add_argument("role", choices=sorted(ROLES))
+    route.add_argument(
+        "--config",
+        type=Path,
+        default=ROOT / "config/model-routing.openai.example.json",
+    )
+
+    costs = commands.add_parser("cost-report", help="Summarize an append-only usage ledger")
+    costs.add_argument("log", type=Path)
+    costs.add_argument("--month", help="Filter recorded_at to YYYY-MM")
     return parser
 
 
@@ -198,6 +226,16 @@ def main() -> None:
             create_demo(args.directory)
         elif args.command == "hash":
             print(sha256_file(args.file))
+        elif args.command == "preflight":
+            result = preflight_agent_call(
+                args.directory, args.stage, allow_demo=args.allow_demo
+            )
+            print(json.dumps(result, indent=2))
+        elif args.command == "route":
+            config = load_routing_config(args.config)
+            print(json.dumps(route_as_dict(resolve_route(config, args.role)), indent=2))
+        elif args.command == "cost-report":
+            print(json.dumps(summarize_usage(args.log, month=args.month), indent=2))
         else:
             result = verify_packet(
                 args.directory,

@@ -12,6 +12,8 @@ That does not make autonomous reporting safe by default. It creates a defensible
 
 An agent can recommend `PASS` or `APPROVE`. Ordinary code checks whether that decision has the right schema, inputs, order, hashes, and unresolved issues. This prevents a persuasive paragraph from becoming an authorization mechanism.
 
+The same rule now applies before costly review calls. Deterministic preflight rejects incomplete evidence, stale hashes, and missing prerequisite approvals before the Claim Checker, Skeptic, or final Facilitator consumes tokens.
+
 ### The Skeptic can return work
 
 Adversarial review has operational authority. `REVISE` identifies upstream roles and blocks downstream work. A critic that cannot stop anything is decorative furniture.
@@ -54,15 +56,19 @@ A hash proves the message bytes did not change. It does not prove who authored t
 
 Publication-specific metadata, media rules, and API behavior belong in adapters. The core should stop at a provider-neutral `READY` decision.
 
+### Model routing needs empirical limits
+
+Risk-tier routing can cut cost without changing who may approve release. It can also create correlated blind spots if a weaker model misses the same class of evidence repeatedly. Keep model choice outside the release decision, log the actual route, and promote or demote a role only after replaying representative packets.
+
 ## Recommended implementation sequence
 
 1. Start with agent prompts and human-only publication.
 2. Add structured claim and Skeptic reviews.
 3. Add exact package hashes and deterministic verification.
-4. Add the two attention screens and protected human decisions.
-5. Add draft creation and authenticated read-back.
-6. Add public verification and durable receipts.
-7. Consider narrow automatic release only after adversarial tests repeatedly fail closed.
+4. Add deterministic preflight and append-only usage logging.
+5. Add the two attention screens and protected human decisions.
+6. Add draft creation and authenticated read-back.
+7. Add public verification and durable receipts.
+8. Consider narrow automatic release only after adversarial tests repeatedly fail closed.
 
 The hard part is not generating prose. The hard part is proving which prose, evidence, policy, and decision reached the Publish button together.
-
