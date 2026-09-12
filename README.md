@@ -115,6 +115,12 @@ agent-publish verify /tmp/agent-publishing-demo --allow-demo
 
 The demonstration uses a clearly labeled fictional publication, organization, person, and source document. The verifier refuses demo packets unless `--allow-demo` is supplied.
 
+The release contract is exercised through the installed CLI in 20 explicit
+user and adversarial categories. See the
+[end-to-end test report](E2E-TEST-REPORT.md) for the cases, commands, debugging
+steps, and extension rules. The complete test suite uses only fictional data
+and makes no model-provider or network calls.
+
 ## What the verifier checks
 
 The release gate in [`src/human_agent_publishing/gate.py`](src/human_agent_publishing/gate.py) requires:
