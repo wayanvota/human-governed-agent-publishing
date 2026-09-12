@@ -57,8 +57,10 @@ unit test is specifically testing one validator.
 
 ## Verification record
 
-Status: local verification passed on September 11, 2026. GitHub Actions
-verification is pending the branch push.
+Status: local and GitHub Actions verification passed on September 11, 2026.
+GitHub Actions run
+[`34665841332`](https://github.com/wayanvota/human-governed-agent-publishing/actions/runs/34665841332)
+passed on Python 3.11, 3.12, and 3.13.
 
 - 20 of 20 explicit E2E categories passed.
 - 39 of 39 total tests passed.
